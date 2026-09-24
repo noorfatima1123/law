@@ -1,0 +1,85 @@
+/* ============================================================
+   ANIMATION LAYER — additive only, no existing classes overridden
+   destructively. Import this once in app/[locale]/layout.tsx:
+     import "./animations.css";
+   ============================================================ */
+
+/* Ambient Three.js background: fixed, full-viewport, behind everything.
+   Uses z-index:-1 so it needs no wrapper/page-shell around existing markup.
+   NOTE: if <body> paints an opaque background color elsewhere in your
+   global stylesheet, set it to transparent so this shows through. */
+.ambient-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Header shrink-on-scroll (class toggled by HeaderScrollEffect) */
+#siteHeader {
+  transition: padding-block 0.25s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 0.25s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+#siteHeader .nav-row {
+  transition: padding-block 0.25s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+#siteHeader.is-scrolled .nav-row {
+  padding-block: 9px;
+}
+#siteHeader.is-scrolled {
+  box-shadow: 0 8px 24px -14px rgba(18, 35, 63, 0.5);
+}
+
+/* FAQ accordion — smooth open/close (max-height is set inline by
+   FaqAccordionList.tsx; this just defines the base + transition) */
+.faq-item .faq-a {
+  overflow: hidden;
+  max-height: 0;
+  margin: 0 4px 0 4px;
+  transition: max-height 0.35s cubic-bezier(0.22, 0.61, 0.36, 1),
+    margin 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.faq-item.is-open .faq-a {
+  margin: 0 4px 20px 4px;
+}
+.faq-item .faq-toggle {
+  transition: transform 0.25s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.faq-item.is-open .faq-toggle {
+  transform: rotate(45deg);
+}
+
+/* Page-load fade */
+body {
+  animation: pageFadeIn 0.5s 0.05s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  opacity: 0;
+}
+@keyframes pageFadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  body {
+    opacity: 1;
+    animation: none;
+  }
+}
