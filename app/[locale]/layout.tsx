@@ -65,7 +65,7 @@ export default async function LocaleLayout({
   if (!LOCALES.includes(locale as (typeof LOCALES)[number])) notFound();
 
   const loc = locale as Locale;
-  const dict = await getDictionary(loc);
+  const dict = getDictionary(loc);
 
   return (
     <html
@@ -73,10 +73,10 @@ export default async function LocaleLayout({
       dir={loc === "ar" ? "rtl" : "ltr"}
       className={`${inter.variable} ${libreCaslon.variable} ${cairo.variable} ${markazi.variable}`}
     >
-      <body>
+      <body suppressHydrationWarning>
         <JsonLd locale={loc} />
         <SiteHeader locale={loc} dict={dict} />
-        {children}
+        <main id="main">{children}</main>
         <SiteFooter locale={loc} dict={dict} />
         <StickyContactButton label={dict.stickyCall} />
       </body>

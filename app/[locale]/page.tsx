@@ -5,6 +5,10 @@ import { getDictionary, type Locale } from "@/lib/i18n";
 import { buildPageMetadata } from "@/lib/seo";
 import IconSprite from "@/components/IconSprite";
 import CaseStudiesSection from "@/components/CaseStudiesSection";
+import TiltCard from "@/components/TiltCard";
+import Reveal from "@/components/Reveal";
+import StepsStripWrap from "@/components/StepsStrip";
+import StatCounter from "@/components/StatCounter";
 
 const ICON_MAP: Record<string, string> = {
   consult: "#ic-consult",
@@ -219,6 +223,30 @@ export default async function HomePage({
         </svg>
       </div>
 
+      {/* STATS STRIP — credibility snapshot */}
+      <div className="section">
+        <div className="container-max">
+          <div className="pillars-row">
+            <StatCounter
+              value={dict.about.statEstablished}
+              label={dict.about.statEstablishedLabel}
+            />
+            <StatCounter
+              value={dict.about.statYears}
+              label={dict.about.statYearsLabel}
+            />
+            <StatCounter
+              value={dict.about.statAreas}
+              label={dict.about.statAreasLabel}
+            />
+            <StatCounter
+              value={dict.about.statLanguages}
+              label={dict.about.statLanguagesLabel}
+            />
+          </div>
+        </div>
+      </div>
+
       {/* PRACTICE GRID — 6 most relevant areas */}
       <div className="section section-alt">
         <div className="container-max">
@@ -228,17 +256,20 @@ export default async function HomePage({
           </div>
           <div className="practice-grid">
             {homeAreas.map((area) => (
-              <Link
-                key={area.slug}
-                className="practice-card"
-                href={`${href("/practice-areas")}#${area.slug}`}
-              >
-                <svg className="practice-icon" width="42" height="42">
-                  <use href={ICON_MAP[area.icon] || "#ic-consult"} />
-                </svg>
-                <h3>{area.title}</h3>
-                <span className="view-more">{dict.home.practiceLearnMore}</span>
-              </Link>
+              <TiltCard key={area.slug}>
+                <Link
+                  className="practice-card"
+                  href={`${href("/practice-areas")}#${area.slug}`}
+                >
+                  <svg className="practice-icon" width="42" height="42">
+                    <use href={ICON_MAP[area.icon] || "#ic-consult"} />
+                  </svg>
+                  <h3>{area.title}</h3>
+                  <span className="view-more">
+                    {dict.home.practiceLearnMore}
+                  </span>
+                </Link>
+              </TiltCard>
             ))}
           </div>
           <div className="section-footer-cta">
@@ -283,23 +314,29 @@ export default async function HomePage({
             <h2>{dict.home.stepsTitle}</h2>
             <p>{dict.home.stepsSubtitle}</p>
           </div>
-          <div className="steps-strip">
-            <div className="step-item">
-              <span className="step-num">01</span>
-              <h4>{dict.home.step1Title}</h4>
-              <p>{dict.home.step1Body}</p>
+
+          <StepsStripWrap>
+            {/* Connecting line — draws as section enters viewport */}
+            <span aria-hidden="true" className="steps-connector" />
+
+            <div className="steps-strip">
+              <Reveal className="step-item" delay={0}>
+                <span className="step-num">01</span>
+                <h4>{dict.home.step1Title}</h4>
+                <p>{dict.home.step1Body}</p>
+              </Reveal>
+              <Reveal className="step-item" delay={180}>
+                <span className="step-num">02</span>
+                <h4>{dict.home.step2Title}</h4>
+                <p>{dict.home.step2Body}</p>
+              </Reveal>
+              <Reveal className="step-item" delay={360}>
+                <span className="step-num">03</span>
+                <h4>{dict.home.step3Title}</h4>
+                <p>{dict.home.step3Body}</p>
+              </Reveal>
             </div>
-            <div className="step-item">
-              <span className="step-num">02</span>
-              <h4>{dict.home.step2Title}</h4>
-              <p>{dict.home.step2Body}</p>
-            </div>
-            <div className="step-item">
-              <span className="step-num">03</span>
-              <h4>{dict.home.step3Title}</h4>
-              <p>{dict.home.step3Body}</p>
-            </div>
-          </div>
+          </StepsStripWrap>
         </div>
       </div>
     </>

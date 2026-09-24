@@ -73,13 +73,39 @@ export const en: Dictionary = {
     step3Body:
       "Once engaged, we set out next steps and keep you informed at every stage.",
     /* ----------------------------------------------------------
-       Content gated by client permission (Q31 / Q32).
-       Empty until firm approves specific examples and quotes.
-       A fabricated testimonial is a materially different risk
-       than a fabricated stat — do not invent content here.
+       ⚠️ PLACEHOLDER CONTENT — VISUAL TEST ONLY
+       Not real case examples or real client quotes. Replace
+       with client-approved, anonymized content (Q31/Q32), or
+       revert to empty arrays before production. A fabricated
+       testimonial carries materially different risk than a
+       fabricated stat.
        ---------------------------------------------------------- */
-    caseExamples: [],
-    testimonials: [],
+    caseExamples: [
+      {
+        situation:
+          "Placeholder — replace with an anonymized real matter.",
+        outcome:
+          "Placeholder — replace with the client-approved outcome.",
+      },
+      {
+        situation:
+          "Placeholder — replace with an anonymized real matter.",
+        outcome:
+          "Placeholder — replace with the client-approved outcome.",
+      },
+    ],
+    testimonials: [
+      {
+        quote:
+          "Placeholder — replace with a client-approved quote. (Do not invent testimonials; obtain written permission first.)",
+        attribution: "Placeholder — Client, [Matter Type], [Year]",
+      },
+      {
+        quote:
+          "Placeholder — replace with a client-approved quote. (Do not invent testimonials; obtain written permission first.)",
+        attribution: "Placeholder — Client, [Matter Type], [Year]",
+      },
+    ],
   },
 
   practiceAreas: {

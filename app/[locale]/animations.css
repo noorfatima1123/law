@@ -83,3 +83,327 @@ body {
     animation: none;
   }
 }
+/* ============================================================
+   PHASE 1a — HERO MOTION
+   Slow, restrained. Respects prefers-reduced-motion.
+   ============================================================ */
+
+/* -------- Emblem: slow float + ring glow pulse -------- */
+@keyframes heroEmblemFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+@keyframes heroEmblemGlow {
+  0%, 100% { box-shadow:
+    0 18px 40px -14px rgba(0,0,0,0.55),
+    inset 0 0 0 6px rgba(169,129,46,0.12),
+    0 0 0 0 rgba(216,190,132,0); }
+  50%      { box-shadow:
+    0 18px 40px -14px rgba(0,0,0,0.55),
+    inset 0 0 0 6px rgba(169,129,46,0.16),
+    0 0 40px 8px rgba(216,190,132,0.22); }
+}
+
+.hero-medallion {
+  animation:
+    heroEmblemFloat 7s ease-in-out infinite,
+    heroEmblemGlow 7s ease-in-out infinite;
+}
+
+/* The medallion's own entrance animation is already defined in
+   globals.css (`medallionIn`). We're layering the ambient float
+   on top; entrance still plays first due to animation-delay 0.25s
+   inside globals.css. */
+
+/* -------- Gold wavy underline: draws once on load -------- */
+@keyframes heroUnderlineDraw {
+  from { stroke-dashoffset: 240; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* This is the swoosh under the H1. It already animates via
+   `drawSwoosh` in globals.css with a 0.9s delay. We keep that —
+   no change needed unless you want to retune timing. */
+.hero-swoosh path {
+  /* Intentionally empty: drawSwoosh in globals.css already
+     handles the one-shot stroke-dashoffset draw. We leave this
+     selector here so the intent is documented. */
+}
+
+/* -------- Hero pillars: staggered light sweep -------- */
+@keyframes heroPillarSweep {
+  0%   { background-position: 50% -30%; }
+  100% { background-position: 50% 130%; }
+}
+
+.hero-pillars span {
+  /* Override the base gradient with an animatable one that
+     has a light band. Uses background-position to sweep. */
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    transparent 35%,
+    rgba(216, 190, 132, 0.55) 50%,
+    transparent 65%,
+    transparent 100%
+  );
+  background-size: 1px 200%;
+  background-repeat: no-repeat;
+  background-position: 50% -30%;
+  animation:
+    pillarRise 1.6s var(--ease-smooth) both,
+    heroPillarSweep 4.2s linear infinite;
+  animation-delay: inherit, 1.8s;
+}
+
+/* Stagger each pillar's sweep */
+.hero-pillars span:nth-child(1) { animation-delay: 0.05s, 1.80s; }
+.hero-pillars span:nth-child(2) { animation-delay: 0.15s, 2.05s; }
+.hero-pillars span:nth-child(3) { animation-delay: 0.25s, 2.30s; }
+.hero-pillars span:nth-child(4) { animation-delay: 0.10s, 2.55s; }
+.hero-pillars span:nth-child(5) { animation-delay: 0.30s, 2.80s; }
+.hero-pillars span:nth-child(6) { animation-delay: 0.20s, 3.05s; }
+.hero-pillars span:nth-child(7) { animation-delay: 0.35s, 3.30s; }
+
+/* -------- Reduced motion: disable float, glow, sweep -------- */
+@media (prefers-reduced-motion: reduce) {
+  .hero-medallion {
+    animation: none;
+    /* Preserve the visible end state of medallionIn */
+    opacity: 1;
+    transform: scale(1);
+  }
+  .hero-pillars span {
+    animation: none;
+    background: linear-gradient(
+      180deg,
+      transparent,
+      rgba(201, 205, 212, 0.55),
+      transparent
+    );
+    background-size: 1px 100%;
+    background-position: 50% 50%;
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  .hero-swoosh path {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+}
+/* ============================================================
+   PHASE 1b — TILT CARD (subtle 3D tilt on hover)
+   ============================================================ */
+
+.tilt-card {
+  /* perspective set via inline style */
+  position: relative;
+  display: block;
+  height: 100%;
+}
+
+.tilt-card-inner {
+  transform-style: preserve-3d;
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1),
+              box-shadow 0.35s cubic-bezier(0.22, 0.61, 0.36, 1),
+              border-color 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: transform;
+  height: 100%;
+}
+
+/* When pointer is inside, transition becomes snappier (no lag) */
+.tilt-card.tilt-active .tilt-card-inner {
+  transition: transform 0.08s linear,
+              box-shadow 0.35s cubic-bezier(0.22, 0.61, 0.36, 1),
+              border-color 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* Soft brass glow on hover */
+.tilt-card.tilt-active .tilt-card-inner {
+  box-shadow:
+    0 1px 2px rgba(18, 35, 63, 0.06),
+    0 18px 40px -14px rgba(18, 35, 63, 0.28),
+    0 0 0 1px rgba(216, 190, 132, 0.4),
+    0 0 32px -8px rgba(216, 190, 132, 0.35);
+}
+
+/* Ensure existing .practice-card / .team-card fills the wrapper */
+.tilt-card .practice-card,
+.tilt-card .team-card,
+.tilt-card .practice-detail {
+  height: 100%;
+}
+
+/* Reduced motion: kill tilt entirely */
+@media (prefers-reduced-motion: reduce) {
+  .tilt-card-inner {
+    transform: none !important;
+    transition: none !important;
+  }
+  .tilt-card.tilt-active .tilt-card-inner {
+    box-shadow: none;
+  }
+}
+/* ============================================================
+   PHASE 1c — STEPS CONNECTOR LINE
+   Horizontal line at the top of the steps strip that draws
+   left-to-right (LTR) or right-to-left (RTL) as the section
+   scrolls into view. Dots appear at start and end of the line.
+   ============================================================ */
+
+.steps-strip-wrap {
+  position: relative;
+}
+
+/* Push the steps content down so the connector line has its own
+   visual band above the numbers. */
+.steps-strip {
+  position: relative;
+  z-index: 1;
+  padding-top: 56px;
+}
+
+/* The connector sits at the very top of the strip */
+.steps-connector {
+  display: block;
+  position: absolute;
+  top: 0;
+  inset-inline-start: 10%;
+  inset-inline-end: 10%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--color-brass-soft) 12%,
+    var(--color-brass-soft) 88%,
+    transparent 100%
+  );
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 1.4s cubic-bezier(0.22, 0.61, 0.36, 1) 0.15s;
+  pointer-events: none;
+  z-index: 0;
+}
+
+[dir="rtl"] .steps-connector {
+  transform-origin: right center;
+}
+
+/* When the section enters viewport, the connector draws */
+.steps-strip-wrap.is-visible .steps-connector {
+  transform: scaleX(1);
+}
+
+/* Small brass dot at start (LTR) / end (RTL) of the line */
+.steps-connector::before,
+.steps-connector::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  margin-top: -3px;
+  border-radius: 50%;
+  background: var(--color-brass);
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+}
+
+.steps-connector::before {
+  inset-inline-start: -3px;
+}
+
+.steps-connector::after {
+  inset-inline-end: -3px;
+}
+
+.steps-strip-wrap.is-visible .steps-connector::before {
+  opacity: 1;
+  transition-delay: 0.3s;
+}
+
+.steps-strip-wrap.is-visible .steps-connector::after {
+  opacity: 1;
+  transition-delay: 1.4s;
+}
+
+/* Reduced motion: line is fully visible immediately, no draw */
+@media (prefers-reduced-motion: reduce) {
+  .steps-connector {
+    transform: scaleX(1) !important;
+    transition: none !important;
+  }
+  .steps-connector::before,
+  .steps-connector::after {
+    opacity: 1 !important;
+    transition: none !important;
+  }
+}
+
+[dir="rtl"] .steps-connector {
+  transform-origin: right center;
+}
+
+/* When the section enters viewport, the connector draws */
+.steps-strip-wrap.is-visible .steps-connector {
+  transform: scaleX(1);
+}
+
+/* Ensure step content sits above the line */
+.steps-strip {
+  position: relative;
+  z-index: 1;
+}
+
+.steps-strip .step-item {
+  background: transparent; /* keep readable over the line */
+}
+
+/* Small brass dot at start (LTR) / end (RTL) of connector — the "source" */
+.steps-connector::before,
+.steps-connector::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  margin-top: -3px;
+  border-radius: 50%;
+  background: var(--color-brass);
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+}
+
+.steps-connector::before {
+  inset-inline-start: -3px;
+}
+
+.steps-connector::after {
+  inset-inline-end: -3px;
+}
+
+.steps-strip-wrap.is-visible .steps-connector::before {
+  opacity: 1;
+  transition-delay: 0.3s;
+}
+
+.steps-strip-wrap.is-visible .steps-connector::after {
+  opacity: 1;
+  transition-delay: 1.4s; /* appears when line finishes drawing */
+}
+
+/* Reduced motion: line is fully visible immediately, no draw */
+@media (prefers-reduced-motion: reduce) {
+  .steps-connector {
+    transform: scaleX(1) !important;
+    transition: none !important;
+  }
+  .steps-connector::before,
+  .steps-connector::after {
+    opacity: 1 !important;
+    transition: none !important;
+  }
+}
+
