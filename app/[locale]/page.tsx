@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { getDictionary, type Locale } from "@/lib/i18n";
+import { buildPageMetadata } from "@/lib/seo";
 import IconSprite from "@/components/IconSprite";
-import Reveal from "@/components/Reveal";
-import RevealLink from "@/components/RevealLink";
+import CaseStudiesSection from "@/components/CaseStudiesSection";
 
-/* Map icon name → SVG symbol id */
 const ICON_MAP: Record<string, string> = {
   consult: "#ic-consult",
   scales: "#ic-scales",
@@ -21,6 +21,38 @@ const ICON_MAP: Record<string, string> = {
   formation: "#ic-formation",
 };
 
+/* Six most broadly relevant areas for the home grid.
+   Full set of 12 remains on /practice-areas. */
+const HOME_PRACTICE_SLUGS = [
+  "legal-consultations",
+  "contracts",
+  "commercial",
+  "labor",
+  "real-estate",
+  "formation",
+];
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  if (locale !== "en" && locale !== "ar") return {};
+  return buildPageMetadata({
+    locale,
+    path: "/",
+    title: {
+      en: "Hamed Dehlawi & Saud Laradhi Company | Attorneys at Law, Jeddah",
+      ar: "حامد دهلوي وسعود لارادي | محامون في جدة",
+    },
+    description: {
+      en: "Jeddah law firm since 1991. Member of the Saudi Bar Association. Legal consultations, Sharia court litigation, contracts, commercial & labor cases.",
+      ar: "مكتب محاماة في جدة تأسس عام 1991، عضو في الهيئة السعودية للمحامين. استشارات قانونية وتقاضٍ أمام المحاكم الشرعية وعقود وقضايا تجارية وعمالية.",
+    },
+  });
+}
+
 export default async function HomePage({
   params,
 }: {
@@ -33,10 +65,15 @@ export default async function HomePage({
   const href = (path: string) =>
     `/${locale}${path.startsWith("/") ? path : `/${path}`}`;
 
+  const homeAreas = dict.practiceAreas.areas.filter((a) =>
+    HOME_PRACTICE_SLUGS.includes(a.slug)
+  );
+
   return (
     <>
       <IconSprite />
 
+      {/* HERO */}
       <div className="hero">
         <div aria-hidden="true" className="hero-pillars">
           <span style={{ height: "38%", animationDelay: ".05s" }} />
@@ -63,11 +100,7 @@ export default async function HomePage({
 
           <h1>{dict.site.name}</h1>
 
-          <svg
-            aria-hidden="true"
-            className="hero-swoosh"
-            viewBox="0 0 150 16"
-          >
+          <svg aria-hidden="true" className="hero-swoosh" viewBox="0 0 150 16">
             <path
               d="M4 4c30 0 30 9 60 9s30-9 60-9"
               fill="none"
@@ -90,6 +123,7 @@ export default async function HomePage({
         </div>
       </div>
 
+      {/* CREDENTIAL STRIP */}
       <div className="credential-strip">
         <div className="container-max">
           <span className="credential-item">
@@ -130,6 +164,7 @@ export default async function HomePage({
         </div>
       </div>
 
+      {/* AUDIENCE SELECTOR */}
       <div className="section">
         <div className="container-max">
           <div className="section-head">
@@ -137,10 +172,9 @@ export default async function HomePage({
             <p>{dict.home.audienceSubtitle}</p>
           </div>
           <div className="audience-select">
-            <RevealLink
+            <Link
               className="audience-card"
               href={`${href("/practice-areas")}?filter=individuals`}
-              delay={0}
             >
               <svg className="aud-icon" viewBox="0 0 48 48">
                 <use href="#ic-labor" />
@@ -148,11 +182,10 @@ export default async function HomePage({
               <h3>{dict.home.audienceIndividualTitle}</h3>
               <p>{dict.home.audienceIndividualDesc}</p>
               <span className="aud-cta">{dict.home.audienceCta} →</span>
-            </RevealLink>
-            <RevealLink
+            </Link>
+            <Link
               className="audience-card"
               href={`${href("/practice-areas")}?filter=business`}
-              delay={90}
             >
               <svg className="aud-icon" viewBox="0 0 48 48">
                 <use href="#ic-briefcase" />
@@ -160,23 +193,20 @@ export default async function HomePage({
               <h3>{dict.home.audienceBusinessTitle}</h3>
               <p>{dict.home.audienceBusinessDesc}</p>
               <span className="aud-cta">{dict.home.audienceCta} →</span>
-            </RevealLink>
-            <RevealLink
-              className="audience-card"
-              href={href("/foreign-investors")}
-              delay={180}
-            >
+            </Link>
+            <Link className="audience-card" href={href("/foreign-investors")}>
               <svg className="aud-icon" viewBox="0 0 48 48">
                 <use href="#ic-globe" />
               </svg>
               <h3>{dict.home.audienceInvestorTitle}</h3>
               <p>{dict.home.audienceInvestorDesc}</p>
               <span className="aud-cta">{dict.home.audienceCta} →</span>
-            </RevealLink>
+            </Link>
           </div>
         </div>
       </div>
 
+      {/* Divider */}
       <div aria-hidden="true" className="section-divider">
         <svg viewBox="0 0 150 16">
           <path
@@ -189,6 +219,7 @@ export default async function HomePage({
         </svg>
       </div>
 
+      {/* PRACTICE GRID — 6 most relevant areas */}
       <div className="section section-alt">
         <div className="container-max">
           <div className="section-head">
@@ -196,19 +227,18 @@ export default async function HomePage({
             <p>{dict.home.practiceSubtitle}</p>
           </div>
           <div className="practice-grid">
-            {dict.practiceAreas.areas.map((area, i) => (
-              <RevealLink
+            {homeAreas.map((area) => (
+              <Link
                 key={area.slug}
                 className="practice-card"
                 href={`${href("/practice-areas")}#${area.slug}`}
-                delay={Math.min(i % 6, 6) * 60}
               >
                 <svg className="practice-icon" width="42" height="42">
                   <use href={ICON_MAP[area.icon] || "#ic-consult"} />
                 </svg>
                 <h3>{area.title}</h3>
                 <span className="view-more">{dict.home.practiceLearnMore}</span>
-              </RevealLink>
+              </Link>
             ))}
           </div>
           <div className="section-footer-cta">
@@ -219,6 +249,19 @@ export default async function HomePage({
         </div>
       </div>
 
+      {/* CASE STUDIES — renders only if firm has granted permission */}
+      <CaseStudiesSection
+        sectionTitle={dict.home.caseStudiesTitle}
+        sectionSubtitle={dict.home.caseStudiesSubtitle}
+        caseExamplesHeading={dict.home.caseExamplesHeading}
+        situationLabel={dict.home.situationLabel}
+        outcomeLabel={dict.home.outcomeLabel}
+        testimonialsHeading={dict.home.testimonialsHeading}
+        caseExamples={dict.home.caseExamples}
+        testimonials={dict.home.testimonials}
+      />
+
+      {/* ABOUT BLURB */}
       <div className="section">
         <div className="container-max">
           <div className="about-block" style={{ textAlign: "center" }}>
@@ -233,6 +276,7 @@ export default async function HomePage({
         </div>
       </div>
 
+      {/* STEPS STRIP */}
       <div className="section section-alt">
         <div className="container-max">
           <div className="section-head">
@@ -240,21 +284,21 @@ export default async function HomePage({
             <p>{dict.home.stepsSubtitle}</p>
           </div>
           <div className="steps-strip">
-            <Reveal as="div" className="step-item" delay={0}>
+            <div className="step-item">
               <span className="step-num">01</span>
               <h4>{dict.home.step1Title}</h4>
               <p>{dict.home.step1Body}</p>
-            </Reveal>
-            <Reveal as="div" className="step-item" delay={90}>
+            </div>
+            <div className="step-item">
               <span className="step-num">02</span>
               <h4>{dict.home.step2Title}</h4>
               <p>{dict.home.step2Body}</p>
-            </Reveal>
-            <Reveal as="div" className="step-item" delay={180}>
+            </div>
+            <div className="step-item">
               <span className="step-num">03</span>
               <h4>{dict.home.step3Title}</h4>
               <p>{dict.home.step3Body}</p>
-            </Reveal>
+            </div>
           </div>
         </div>
       </div>

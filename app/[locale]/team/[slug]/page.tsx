@@ -77,117 +77,81 @@ export default async function TeamMemberPage({
 
       <div className="section">
         <div className="container-max">
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "minmax(0, 280px) 1fr",
-              gap: 48,
-              alignItems: "start",
-              maxWidth: 900,
-              marginInline: "auto",
-            }}
-            className="member-detail-grid"
-          >
-            {/* Avatar + Contact */}
+          <div className="member-detail-grid">
+            {/* Avatar + name */}
             <div>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={member.avatar}
                 alt={member.name}
-                style={{
-                  width: "100%",
-                  aspectRatio: "1 / 1",
-                  objectFit: "cover",
-                  borderRadius: "50%",
-                  background: "var(--color-parchment-2)",
-                  border: "2px solid var(--color-brass-soft)",
-                  boxShadow:
-                    "0 12px 30px -12px rgba(18,35,63,0.25), 0 4px 12px -4px rgba(18,35,63,0.12)",
-                  display: "block",
-                }}
+                className="member-detail-avatar"
               />
-              <div style={{ marginTop: 20, textAlign: "center" }}>
-                <div
-                  style={{
-                    fontFamily: "var(--font-heading), serif",
-                    fontWeight: 700,
-                    fontSize: 22,
-                    color: "var(--color-ink-navy)",
-                  }}
-                >
-                  {member.name}
-                </div>
-                <div
-                  style={{
-                    fontSize: 12,
-                    color: "var(--color-stone)",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.14em",
-                    fontWeight: 600,
-                    marginTop: 6,
-                  }}
-                >
-                  {member.role}
-                </div>
+              <div className="member-detail-name-block">
+                <div className="member-detail-name">{member.name}</div>
+                <div className="member-detail-role">{member.role}</div>
               </div>
             </div>
 
             {/* Details */}
             <div>
-              <p style={{ fontSize: 17, lineHeight: 1.7, color: "var(--text)" }}>
-                {member.bio}
-              </p>
+              <p className="member-detail-bio">{member.bio}</p>
 
               <Section title={dict.about.detailFocusLabel}>
-                <ul style={{ paddingInlineStart: 20, margin: 0 }}>
+                <ul className="member-detail-list">
                   {member.focus.map((item, i) => (
-                    <li key={i} style={{ marginBottom: 6, color: "var(--text-soft)" }}>
-                      {item}
-                    </li>
+                    <li key={i}>{item}</li>
                   ))}
                 </ul>
               </Section>
 
               <Section title={dict.about.detailEducationLabel}>
-                <ul style={{ paddingInlineStart: 20, margin: 0 }}>
+                <ul className="member-detail-list">
                   {member.education.map((item, i) => (
-                    <li key={i} style={{ marginBottom: 6, color: "var(--text-soft)" }}>
-                      {item}
-                    </li>
+                    <li key={i}>{item}</li>
+                  ))}
+                </ul>
+              </Section>
+
+              <Section title={dict.about.detailBarAdmissionLabel}>
+                <p className="member-detail-text">{member.barAdmissionYear}</p>
+              </Section>
+
+              <Section title={dict.about.detailCourtsLabel}>
+                <ul className="member-detail-list">
+                  {member.courtsAppearedBefore.map((item, i) => (
+                    <li key={i}>{item}</li>
                   ))}
                 </ul>
               </Section>
 
               <Section title={dict.about.detailLanguagesLabel}>
-                <p style={{ margin: 0, color: "var(--text-soft)" }}>
+                <p className="member-detail-text">
                   {member.languages.join(" · ")}
                 </p>
               </Section>
 
               <Section title={dict.about.detailMembershipsLabel}>
-                <ul style={{ paddingInlineStart: 20, margin: 0 }}>
+                <ul className="member-detail-list">
                   {member.memberships.map((item, i) => (
-                    <li key={i} style={{ marginBottom: 6, color: "var(--text-soft)" }}>
-                      {item}
-                    </li>
+                    <li key={i}>{item}</li>
                   ))}
                 </ul>
               </Section>
 
               <Section title={dict.about.detailContactLabel}>
-                <p style={{ margin: "0 0 6px 0" }}>
+                <p className="member-detail-text" style={{ marginBottom: 6 }}>
                   <a
                     href={`mailto:${member.email}`}
-                    style={{ color: "var(--color-brass)", textDecoration: "none" }}
+                    className="member-detail-link"
                   >
                     {member.email}
                   </a>
                 </p>
-                <p style={{ margin: 0 }}>
+                <p className="member-detail-text" style={{ margin: 0 }}>
                   <a
                     href={`tel:${member.phone.replace(/\s/g, "")}`}
                     dir="ltr"
-                    style={{ color: "var(--color-brass)", textDecoration: "none" }}
+                    className="member-detail-link"
                   >
                     {member.phone}
                   </a>
@@ -233,19 +197,8 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <div style={{ marginTop: 28 }}>
-      <h3
-        style={{
-          fontSize: 14,
-          textTransform: "uppercase",
-          letterSpacing: "0.14em",
-          color: "var(--color-brass)",
-          marginBottom: 10,
-          fontWeight: 700,
-        }}
-      >
-        {title}
-      </h3>
+    <div className="member-detail-section">
+      <h3 className="member-detail-section-title">{title}</h3>
       {children}
     </div>
   );

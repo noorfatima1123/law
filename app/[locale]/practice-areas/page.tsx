@@ -4,7 +4,6 @@ import type { Metadata } from "next";
 import { getDictionary, type Locale } from "@/lib/i18n";
 import { buildPageMetadata } from "@/lib/seo";
 import IconSprite from "@/components/IconSprite";
-import Reveal from "@/components/Reveal";
 
 const ICON_MAP: Record<string, string> = {
   consult: "#ic-consult",
@@ -66,9 +65,7 @@ export default async function PracticeAreasPage({
   const filteredAreas =
     activeFilter === "all"
       ? dict.practiceAreas.areas
-      : dict.practiceAreas.areas.filter((a) =>
-          a.tags.includes(activeFilter)
-        );
+      : dict.practiceAreas.areas.filter((a) => a.tags.includes(activeFilter));
 
   const href = (path: string) => `/${locale}${path}`;
 
@@ -116,13 +113,11 @@ export default async function PracticeAreasPage({
 
           <div className="practice-detail-list">
             {filteredAreas.map((area, i) => (
-              <Reveal
-                as="div"
+              <div
                 className="practice-detail"
                 data-tags={area.tags.join(",")}
                 id={area.slug}
                 key={area.slug}
-                delay={Math.min(i % 6, 6) * 60}
               >
                 <div className="practice-detail-icon">
                   <svg width={26} height={26}>
@@ -135,9 +130,39 @@ export default async function PracticeAreasPage({
                   </span>
                   <h3>{area.title}</h3>
                   <p>{area.desc}</p>
+
+                  <div className="practice-meta">
+                    <div className="practice-meta-item">
+                      <span className="practice-meta-label">
+                        {dict.practiceAreas.timelineLabel}
+                      </span>
+                      <span className="practice-meta-value">
+                        {area.timeline}
+                      </span>
+                    </div>
+                    {area.caseCount && (
+                      <div className="practice-meta-item">
+                        <span className="practice-meta-label">
+                          {dict.practiceAreas.caseCountLabel}
+                        </span>
+                        <span className="practice-meta-value">
+                          {area.caseCount}
+                        </span>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </Reveal>
+              </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="section section-alt">
+        <div className="container-max">
+          <div className="fees-block">
+            <h2 className="fees-title">{dict.practiceAreas.feesTitle}</h2>
+            <p className="fees-note">{dict.practiceAreas.feesNote}</p>
           </div>
         </div>
       </div>

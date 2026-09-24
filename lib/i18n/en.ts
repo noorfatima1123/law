@@ -46,9 +46,16 @@ export const en: Dictionary = {
     audienceCta: "See relevant areas",
     practiceTitle: "How We Can Help",
     practiceSubtitle:
-      "Twelve areas of practice, handled by lawyers who take the time to understand your matter before advising on it.",
+      "A focused subset of our practice, handled by lawyers who take the time to understand your matter before advising on it.",
     practiceViewAll: "View All Practice Areas",
     practiceLearnMore: "Learn more",
+    caseStudiesTitle: "Selected Work",
+    caseStudiesSubtitle:
+      "Anonymized examples from matters we have handled, and what clients have said about working with us.",
+    caseExamplesHeading: "Case Examples",
+    situationLabel: "Situation",
+    outcomeLabel: "Outcome",
+    testimonialsHeading: "Testimonials",
     aboutTitle: "A Practice Built on Direct Relationships",
     aboutBody:
       "Established in Jeddah in 1991, Hamed Dehlawi & Saud Laradhi Company is a member of the Saudi Bar Association, serving Arabic- and English-speaking clients across the Kingdom for over three decades.",
@@ -65,6 +72,14 @@ export const en: Dictionary = {
     step3Title: "Engagement & Action",
     step3Body:
       "Once engaged, we set out next steps and keep you informed at every stage.",
+    /* ----------------------------------------------------------
+       Content gated by client permission (Q31 / Q32).
+       Empty until firm approves specific examples and quotes.
+       A fabricated testimonial is a materially different risk
+       than a fabricated stat — do not invent content here.
+       ---------------------------------------------------------- */
+    caseExamples: [],
+    testimonials: [],
   },
 
   practiceAreas: {
@@ -75,6 +90,10 @@ export const en: Dictionary = {
     filterIndividuals: "Individuals & Families",
     filterBusiness: "Businesses",
     filterInvestors: "Foreign Investors",
+    timelineLabel: "Typical timeline",
+    caseCountLabel: "Cases handled",
+    feesTitle: "Fee Structure",
+    feesNote: "[TBD]",
     areas: [
       {
         slug: "legal-consultations",
@@ -82,6 +101,7 @@ export const en: Dictionary = {
         desc: "We provide clear, practical legal advice to individuals, families, and businesses on matters governed by Saudi law and regulation. Every consultation is grounded in an honest assessment of your position before any course of action is recommended.",
         tags: ["individuals", "business"],
         icon: "consult",
+        timeline: "[TBD]",
       },
       {
         slug: "sharia-litigation",
@@ -89,6 +109,8 @@ export const en: Dictionary = {
         desc: "Our lawyers represent clients before the Sharia courts in personal status, inheritance, and civil disputes, preparing each case with careful attention to evidence and procedure.",
         tags: ["individuals"],
         icon: "scales",
+        timeline: "[TBD]",
+        caseCount: "[TBD]",
       },
       {
         slug: "contracts",
@@ -96,6 +118,7 @@ export const en: Dictionary = {
         desc: "We draft and review commercial, employment, and personal contracts to make sure the terms you sign reflect your actual intentions and protect you if circumstances change.",
         tags: ["business", "investors"],
         icon: "contract",
+        timeline: "[TBD]",
       },
       {
         slug: "commercial",
@@ -103,6 +126,8 @@ export const en: Dictionary = {
         desc: "We handle commercial disputes between companies, partners, and trading parties, from contract breaches to shareholder disagreements.",
         tags: ["business"],
         icon: "briefcase",
+        timeline: "[TBD]",
+        caseCount: "[TBD]",
       },
       {
         slug: "labor",
@@ -110,6 +135,8 @@ export const en: Dictionary = {
         desc: "We advise and represent both employers and employees in disputes over termination, wages, end-of-service benefits, and workplace rights under Saudi labor law.",
         tags: ["business"],
         icon: "labor",
+        timeline: "[TBD]",
+        caseCount: "[TBD]",
       },
       {
         slug: "execution",
@@ -117,6 +144,7 @@ export const en: Dictionary = {
         desc: "When a judgment or a debt goes unpaid, we pursue enforcement through the Execution Court to recover what is rightfully owed to you.",
         tags: ["individuals", "business"],
         icon: "gavel",
+        timeline: "[TBD]",
       },
       {
         slug: "real-estate",
@@ -124,6 +152,7 @@ export const en: Dictionary = {
         desc: "We handle disputes and transactions involving property ownership, leasing, off-plan sales, and construction contracts.",
         tags: ["individuals", "investors"],
         icon: "realestate",
+        timeline: "[TBD]",
       },
       {
         slug: "trademarks",
@@ -131,6 +160,7 @@ export const en: Dictionary = {
         desc: "We register and protect trademarks, and advise on copyright and other intellectual property matters, so that the names and creative work behind your business remain yours.",
         tags: ["business", "investors"],
         icon: "trademark",
+        timeline: "[TBD]",
       },
       {
         slug: "settlements",
@@ -138,6 +168,7 @@ export const en: Dictionary = {
         desc: "Not every dispute needs a courtroom. We negotiate settlements and act as mediators between parties who prefer a faster, less adversarial resolution.",
         tags: ["individuals", "business"],
         icon: "handshake",
+        timeline: "[TBD]",
       },
       {
         slug: "hr",
@@ -145,6 +176,7 @@ export const en: Dictionary = {
         desc: "We support businesses with the legal side of human resources: employment contracts, workplace policies, and compliance with Saudi labor regulations.",
         tags: ["business"],
         icon: "hr",
+        timeline: "[TBD]",
       },
       {
         slug: "foreign-investors",
@@ -152,6 +184,7 @@ export const en: Dictionary = {
         desc: "We guide foreign investors and companies entering the Saudi market through licensing, contracts, and the legal formalities of doing business in the Kingdom.",
         tags: ["investors"],
         icon: "globe",
+        timeline: "[TBD]",
       },
       {
         slug: "formation",
@@ -159,6 +192,7 @@ export const en: Dictionary = {
         desc: "We help new businesses get established in Saudi Arabia from the ground up: choosing the right legal structure, registering with the Ministry of Commerce, securing licenses, and drafting founding documents and bylaws.",
         tags: ["individuals", "business", "investors"],
         icon: "formation",
+        timeline: "[TBD]",
       },
     ],
   },
@@ -224,6 +258,8 @@ export const en: Dictionary = {
           "Bachelor of Laws (LL.B.) — King Abdulaziz University",
           "Admitted to the Saudi Bar Association",
         ],
+        barAdmissionYear: "[TBD]",
+        courtsAppearedBefore: ["[TBD]"],
         languages: ["Arabic (native)", "English (professional)"],
         memberships: [
           "Saudi Bar Association — Registered Member",
@@ -248,6 +284,8 @@ export const en: Dictionary = {
           "Bachelor of Laws (LL.B.) — King Saud University",
           "Admitted to the Saudi Bar Association",
         ],
+        barAdmissionYear: "[TBD]",
+        courtsAppearedBefore: ["[TBD]"],
         languages: ["Arabic (native)", "English (professional)"],
         memberships: [
           "Saudi Bar Association — Registered Member",
@@ -259,6 +297,8 @@ export const en: Dictionary = {
     ],
     detailFocusLabel: "Practice Focus",
     detailEducationLabel: "Education & Admissions",
+    detailBarAdmissionLabel: "Year of Bar Admission",
+    detailCourtsLabel: "Courts Regularly Appeared Before",
     detailLanguagesLabel: "Languages",
     detailMembershipsLabel: "Professional Memberships",
     detailContactLabel: "Contact",
@@ -282,6 +322,10 @@ export const en: Dictionary = {
     emailValue: "hdehlawi@gmail.com",
     hoursTitle: "Office Hours",
     hoursValue: "Sunday – Thursday, 9:00 AM – 5:00 PM",
+    videoTitle: "Video/Phone Consultations",
+    videoValue: "[TBD]",
+    parkingTitle: "Parking",
+    parkingValue: "[TBD]",
     note: "Contact details above are drawn from the firm's registration with the Saudi Bar Association. To reach us directly, please use the phone number or email above, or tap \"Call the Firm\" below.",
     mapLocation: "Ar Ruwais District, Jeddah",
     mapCta: "Get Directions",
@@ -360,6 +404,8 @@ export const en: Dictionary = {
     title: "Legal Support for Foreign Investors",
     subtitle:
       "Arabic legal proceedings. English explanations. Guidance through market entry, licensing, and company formation in Saudi Arabia.",
+    timelineBadgeLabel: "Typical MISA timeline",
+    timelineBadgeValue: "[TBD]",
     qas: [
       {
         q: "Do I need a Saudi partner?",
@@ -390,6 +436,21 @@ export const en: Dictionary = {
         q: "Do you work in English?",
         a: "Yes. Our team serves both Arabic and English-speaking clients throughout the process, from initial consultation to final documentation.",
         icon: "consult",
+      },
+      {
+        q: "Common early mistakes we see",
+        a: "[TBD — awaiting firm input]",
+        icon: "consult",
+      },
+      {
+        q: "What clients ask us first",
+        a: "[TBD — awaiting firm input]",
+        icon: "consult",
+      },
+      {
+        q: "How the 2025 Investment Law and 2026 real estate rules affect you",
+        a: "[TBD — awaiting firm input]",
+        icon: "contract",
       },
     ],
     ctaTitle: "Start Your Application",

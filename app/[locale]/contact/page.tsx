@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { getDictionary, type Locale } from "@/lib/i18n";
 import { buildPageMetadata } from "@/lib/seo";
 import IconSprite from "@/components/IconSprite";
-import Reveal from "@/components/Reveal";
 
 export async function generateMetadata({
   params,
@@ -72,7 +71,7 @@ export default async function ContactPage({
           <div className="contact-grid">
             <div>
               <ul className="contact-list">
-                <Reveal as="li" delay={0}>
+                <li>
                   <span className="ic">
                     <svg height={22} width={22}><use href="#ic-pin" /></svg>
                   </span>
@@ -80,8 +79,8 @@ export default async function ContactPage({
                     <h4>{dict.contact.officeTitle}</h4>
                     <p>{dict.contact.officeAddress}</p>
                   </div>
-                </Reveal>
-                <Reveal as="li" delay={60}>
+                </li>
+                <li>
                   <span className="ic">
                     <svg height={22} width={22}><use href="#ic-phone" /></svg>
                   </span>
@@ -97,8 +96,8 @@ export default async function ContactPage({
                       </a>
                     </p>
                   </div>
-                </Reveal>
-                <Reveal as="li" delay={120}>
+                </li>
+                <li>
                   <span className="ic">
                     <svg height={22} width={22}><use href="#ic-mail" /></svg>
                   </span>
@@ -113,8 +112,8 @@ export default async function ContactPage({
                       </a>
                     </p>
                   </div>
-                </Reveal>
-                <Reveal as="li" delay={180}>
+                </li>
+                <li>
                   <span className="ic">
                     <svg height={22} width={22}><use href="#ic-clock" /></svg>
                   </span>
@@ -122,14 +121,32 @@ export default async function ContactPage({
                     <h4>{dict.contact.hoursTitle}</h4>
                     <p>{dict.contact.hoursValue}</p>
                   </div>
-                </Reveal>
+                </li>
+                <li>
+                  <span className="ic">
+                    <svg height={22} width={22}><use href="#ic-globe" /></svg>
+                  </span>
+                  <div>
+                    <h4>{dict.contact.videoTitle}</h4>
+                    <p>{dict.contact.videoValue}</p>
+                  </div>
+                </li>
+                <li>
+                  <span className="ic">
+                    <svg height={22} width={22}><use href="#ic-pin" /></svg>
+                  </span>
+                  <div>
+                    <h4>{dict.contact.parkingTitle}</h4>
+                    <p>{dict.contact.parkingValue}</p>
+                  </div>
+                </li>
               </ul>
               <div className="hours-note">
                 <p style={{ margin: 0 }}>{dict.contact.note}</p>
               </div>
             </div>
 
-            <Reveal as="div" className="map-card" delay={100}>
+            <div className="map-card">
               <div className="map-visual">
                 <svg className="map-pin" viewBox="0 0 24 24">
                   <use href="#ic-pin" />
@@ -146,129 +163,8 @@ export default async function ContactPage({
                   {dict.contact.mapCta}
                 </a>
               </div>
-            </Reveal>
-          </div>
-
-          {/* CONTACT FORM — Visual only, backend wired later */}
-          <Reveal as="div" className="form-card" delay={0}>
-            <div className="form-card-head">
-              <h2>{isAr ? "أرسلوا لنا رسالة" : "Send Us a Message"}</h2>
-              <p>
-                {isAr
-                  ? "أخبرونا بإيجاز عن قضيتكم وسيتواصل معكم المحامي المختص من فريقنا."
-                  : "Tell us briefly about your matter and the right lawyer on our team will get back to you."}
-              </p>
             </div>
-
-            <form className="contact-form" noValidate>
-              <div className="form-field">
-                <label htmlFor="cf-name">
-                  {isAr ? "الاسم الكامل" : "Full Name"}
-                </label>
-                <input
-                  autoComplete="name"
-                  id="cf-name"
-                  name="name"
-                  placeholder={isAr ? "اسمك الكامل" : "Your full name"}
-                  type="text"
-                />
-              </div>
-
-              <div className="form-field">
-                <label htmlFor="cf-email">
-                  {isAr ? "البريد الإلكتروني" : "Email"}
-                </label>
-                <input
-                  autoComplete="email"
-                  dir="ltr"
-                  id="cf-email"
-                  name="email"
-                  placeholder="you@example.com"
-                  type="email"
-                />
-              </div>
-
-              <div className="form-field">
-                <label htmlFor="cf-phone">
-                  {isAr ? "رقم الهاتف (اختياري)" : "Phone (optional)"}
-                </label>
-                <input
-                  autoComplete="tel"
-                  dir="ltr"
-                  id="cf-phone"
-                  name="phone"
-                  placeholder="+966 5X XXX XXXX"
-                  type="tel"
-                />
-              </div>
-
-              <div className="form-field">
-                <label htmlFor="cf-topic">
-                  {isAr ? "كيف يمكننا مساعدتكم؟" : "How can we help?"}
-                </label>
-                <select id="cf-topic" name="topic" defaultValue="general">
-                  <option value="general">
-                    {isAr ? "استفسار عام" : "General Inquiry"}
-                  </option>
-                  <option value="foreign-investment">
-                    {isAr ? "خدمات المستثمرين الأجانب" : "Foreign Investor Services"}
-                  </option>
-                  <option value="contracts">
-                    {isAr ? "مراجعة وصياغة العقود" : "Contract Review / Drafting"}
-                  </option>
-                  <option value="commercial">
-                    {isAr ? "نزاع تجاري" : "Commercial Dispute"}
-                  </option>
-                  <option value="labor">
-                    {isAr ? "قضية عمالية" : "Labor / Employment Matter"}
-                  </option>
-                  <option value="real-estate">
-                    {isAr ? "عقارات" : "Real Estate"}
-                  </option>
-                  <option value="other">
-                    {isAr ? "أخرى" : "Other"}
-                  </option>
-                </select>
-              </div>
-
-              <div className="form-field full">
-                <label htmlFor="cf-message">
-                  {isAr ? "الرسالة" : "Message"}
-                </label>
-                <textarea
-                  id="cf-message"
-                  name="message"
-                  placeholder={
-                    isAr
-                      ? "اكتبوا وصفًا موجزًا لقضيتكم هنا."
-                      : "Write a short description of your matter here."
-                  }
-                  rows={5}
-                />
-              </div>
-
-              <div className="form-submit-row">
-                <button
-                  className="btn btn-primary"
-                  type="button"
-                  disabled
-                  aria-disabled="true"
-                  title={
-                    isAr
-                      ? "سيتم تفعيل النموذج قريبًا."
-                      : "The form will be enabled soon."
-                  }
-                >
-                  {isAr ? "إرسال الرسالة" : "Send Message"}
-                </button>
-                <span style={{ fontSize: 13, color: "var(--text-soft)" }}>
-                  {isAr
-                    ? "سيتم تفعيل المراسلة الإلكترونية قريبًا. للتواصل الفوري، يُرجى استخدام الهاتف أو البريد الإلكتروني أعلاه."
-                    : "Email messaging will be enabled soon. For immediate contact, please use the phone or email above."}
-                </span>
-              </div>
-            </form>
-          </Reveal>
+          </div>
         </div>
       </div>
     </>

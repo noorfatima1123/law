@@ -1,12 +1,11 @@
 /* ============================================================
    Dictionary shape — English and Arabic must both satisfy this.
-   If a key is missing in either, TypeScript will complain.
    ============================================================ */
 
 export type Locale = "en" | "ar";
 
 /* ----------------------------------------------------------
-   Team member detail (used by /team/[slug] pages)
+   Team member detail
    ---------------------------------------------------------- */
 export interface TeamMemberDetail {
   slug: string;
@@ -16,6 +15,8 @@ export interface TeamMemberDetail {
   bio: string;
   focus: string[];
   education: string[];
+  barAdmissionYear: string;
+  courtsAppearedBefore: string[];
   languages: string[];
   memberships: string[];
   email: string;
@@ -23,12 +24,35 @@ export interface TeamMemberDetail {
 }
 
 /* ----------------------------------------------------------
+   Practice area
+   ---------------------------------------------------------- */
+export interface PracticeArea {
+  slug: string;
+  title: string;
+  desc: string;
+  tags: string[];
+  icon: string;
+  timeline: string;
+  caseCount?: string;
+}
+
+/* ----------------------------------------------------------
+   Case example + testimonial (permission-gated)
+   ---------------------------------------------------------- */
+export interface CaseExample {
+  situation: string;
+  outcome: string;
+}
+
+export interface Testimonial {
+  quote: string;
+  attribution: string;
+}
+
+/* ----------------------------------------------------------
    Main dictionary shape
    ---------------------------------------------------------- */
 export interface Dictionary {
-  /* ----------------------------------------------------------
-     Site-wide
-     ---------------------------------------------------------- */
   site: {
     name: string;
     nameShort: string;
@@ -36,9 +60,6 @@ export interface Dictionary {
     established: string;
   };
 
-  /* ----------------------------------------------------------
-     Navigation
-     ---------------------------------------------------------- */
   nav: {
     home: string;
     practiceAreas: string;
@@ -51,9 +72,6 @@ export interface Dictionary {
     skipToContent: string;
   };
 
-  /* ----------------------------------------------------------
-     Home page
-     ---------------------------------------------------------- */
   home: {
     heroTagline: string;
     heroExplore: string;
@@ -78,6 +96,12 @@ export interface Dictionary {
     practiceSubtitle: string;
     practiceViewAll: string;
     practiceLearnMore: string;
+    caseStudiesTitle: string;
+    caseStudiesSubtitle: string;
+    caseExamplesHeading: string;
+    situationLabel: string;
+    outcomeLabel: string;
+    testimonialsHeading: string;
     aboutTitle: string;
     aboutBody: string;
     aboutCta: string;
@@ -89,11 +113,10 @@ export interface Dictionary {
     step2Body: string;
     step3Title: string;
     step3Body: string;
+    caseExamples: CaseExample[];
+    testimonials: Testimonial[];
   };
 
-  /* ----------------------------------------------------------
-     Practice Areas page
-     ---------------------------------------------------------- */
   practiceAreas: {
     title: string;
     subtitle: string;
@@ -101,18 +124,13 @@ export interface Dictionary {
     filterIndividuals: string;
     filterBusiness: string;
     filterInvestors: string;
-    areas: Array<{
-      slug: string;
-      title: string;
-      desc: string;
-      tags: string[];
-      icon: string;
-    }>;
+    timelineLabel: string;
+    caseCountLabel: string;
+    feesTitle: string;
+    feesNote: string;
+    areas: PracticeArea[];
   };
 
-  /* ----------------------------------------------------------
-     About page
-     ---------------------------------------------------------- */
   about: {
     title: string;
     subtitle: string;
@@ -128,7 +146,6 @@ export interface Dictionary {
     statAreasLabel: string;
     statLanguages: string;
     statLanguagesLabel: string;
-    /* Trust signals — 8 placeholder fields */
     trustMattersHandledLabel: string;
     trustMattersHandledValue: string;
     trustForeignInvestorShareLabel: string;
@@ -155,10 +172,11 @@ export interface Dictionary {
     teamHamedRole: string;
     teamSaud: string;
     teamSaudRole: string;
-    /* Detail pages */
     teamMembers: TeamMemberDetail[];
     detailFocusLabel: string;
     detailEducationLabel: string;
+    detailBarAdmissionLabel: string;
+    detailCourtsLabel: string;
     detailLanguagesLabel: string;
     detailMembershipsLabel: string;
     detailContactLabel: string;
@@ -168,9 +186,6 @@ export interface Dictionary {
     detailCtaButton: string;
   };
 
-  /* ----------------------------------------------------------
-     Contact page
-     ---------------------------------------------------------- */
   contact: {
     title: string;
     subtitle: string;
@@ -182,14 +197,15 @@ export interface Dictionary {
     emailValue: string;
     hoursTitle: string;
     hoursValue: string;
+    videoTitle: string;
+    videoValue: string;
+    parkingTitle: string;
+    parkingValue: string;
     note: string;
     mapLocation: string;
     mapCta: string;
   };
 
-  /* ----------------------------------------------------------
-     FAQ page
-     ---------------------------------------------------------- */
   faq: {
     title: string;
     subtitle: string;
@@ -211,12 +227,11 @@ export interface Dictionary {
     }>;
   };
 
-  /* ----------------------------------------------------------
-     Foreign Investors page
-     ---------------------------------------------------------- */
   foreignInvestors: {
     title: string;
     subtitle: string;
+    timelineBadgeLabel: string;
+    timelineBadgeValue: string;
     qas: Array<{
       q: string;
       a: string;
@@ -227,9 +242,6 @@ export interface Dictionary {
     ctaButton: string;
   };
 
-  /* ----------------------------------------------------------
-     Footer
-     ---------------------------------------------------------- */
   footer: {
     quickLinks: string;
     office: string;
@@ -239,14 +251,8 @@ export interface Dictionary {
     established: string;
   };
 
-  /* ----------------------------------------------------------
-     Sticky mobile call button
-     ---------------------------------------------------------- */
   stickyCall: string;
 
-  /* ----------------------------------------------------------
-     Shared
-     ---------------------------------------------------------- */
   shared: {
     learnMore: string;
     callTheFirm: string;
